@@ -1,0 +1,84 @@
+---
+system_packages:
+  # Core Compositor
+  - labwc
+  - labwc-tweaks
+  - xorg-xwayland
+  - noctalia
+  - xdg-desktop-portal
+  - xdg-desktop-portal-wlr
+  - xdg-desktop-portal-gtk
+
+  # Login Manager
+  - greetd
+  - gtkgreet
+  - cage
+
+  # File Management & Drive Mounting
+  - udisks2
+  - udiskie
+
+  # Audio
+  - pipewire-pulseaudio
+  - pipewire-alsa
+  - wireplumber
+  - pavucontrol
+
+  # Bluetooth
+  - bluez
+  - pipewire-plugin-gstreamer
+  - blueman
+
+  # Network
+  - network-manager-applet
+  - NetworkManager-tui
+  - firewalld
+
+  # Input Method
+  - fcitx5
+  - fcitx5-gtk
+  - fcitx5-qt
+  - fcitx5-configtool
+
+  # Printer
+  - cups
+  - cups-filters
+  - system-config-printer
+  - cups-pk-helper
+
+  # Screen Brightness
+  - brightnessctl
+
+  # Fonts
+  - inter-fonts
+  - jetbrains-mono-fonts
+  - google-noto-sans-fonts
+  - google-noto-sans-symbols-fonts
+  - fontawesome-6-free-fonts
+  - fontawesome-6-brands-fonts
+
+  # Icon Themes
+  - papirus-icon-theme
+  - adwaita-icon-theme
+
+  # Terminal Apps
+  - git
+  - curl
+  - neovim
+  - fastfetch
+  - btop
+  - flatpak
+  - syncthing
+  - stow
+
+  # GUI Apps
+  - celluloid
+  - gnome-disk-utility
+  - thunar
+  - alacritty
+  - mousepad
+  - xarchiver
+  - geany
+  - geany-plugins
+  - epdfview
+

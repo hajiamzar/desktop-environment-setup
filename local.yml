@@ -1,0 +1,75 @@
+---
+- name: Desktop Environment Setup
+  hosts: local
+  become: true
+
+  tasks:
+    - name: Load OS-specific variables
+      include_vars: "{{ item }}"
+      with_first_found:
+        - files:
+            - "{{ ansible_os_family }}.yml"
+            - "default.yml"
+          paths:
+            - "vars"
+
+    - name: Install system utilities and core applications
+      package:
+        name: "{{ system_packages }}"
+        state: present
+
+    - name: Create /etc/greetd configuration directory
+      file:
+        path: /etc/greetd
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Write greetd configuration file
+      copy:
+        dest: /etc/greetd/config.toml
+        content: |
+          [terminal]
+          vt = 1
+
+          [default_session]
+          # cage runs gtkgreet as a kiosk; -s enables VT switching
+          command = "cage -s -- gtkgreet --remember --remember-session -c labwc"
+          user = "greeter"
+
+    - name: Define available graphical environments for gtkgreet
+      copy:
+        dest: /etc/greetd/environments
+        content: |
+          labwc
+
+    - name: Enable and start core system and networking services
+      systemd:
+        name: "{{ item }}"
+        enabled: true
+        state: started
+      loop:
+        - greetd
+        - NetworkManager
+        - firewalld
+
+    - name: Install GNU Stow for dotfiles management
+      package:
+        name: stow
+        state: present
+
+    - name: Clone or update dotfiles repository
+      git:
+        repo: 'https://github.com/YOUR_USERNAME/dotfiles.git' # Replace with your actual repo URL
+        dest: "{{ lookup('env', 'HOME') }}/.dotfiles"
+        accept_hostkey: yes
+        update: yes
+
+    - name: Stow dotfiles configurations into ~/.config
+      command: >
+        stow -d "{{ lookup('env', 'HOME') }}/.dotfiles"
+             -t "{{ lookup('env', 'HOME') }}/.config"
+             labwc noctalia alacritty nvim
+      args:
+        creates: "{{ lookup('env', 'HOME') }}/.config/labwc"
