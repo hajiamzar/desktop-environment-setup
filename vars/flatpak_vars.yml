@@ -1,0 +1,36 @@
+---
+flatpak_packages:
+  - com.brave.Browser
+  - com.calibre_ebook.calibre
+  - com.github.Anuken.Mindustry
+  - com.github.tchx84.Flatseal
+  - com.obsproject.Studio
+  - com.valvesoftware.Steam
+  - dev.vencord.Vesktop
+  - fr.handbrake.ghb
+  - io.github.Foldex.AdwSteamGtk
+  - io.github.endless_sky.endless_sky
+  - io.gitlab.theevilskeleton.Upscaler
+  - io.github.hihebark.QuranReader
+  - net.kuribo64.melonDS
+  - net.openra.OpenRA
+  - net.pcsx2.PCSX2
+  - net.supertuxkart.SuperTuxKart
+  - org.aegisub.Aegisub
+  - org.audacityteam.Audacity
+  - org.electrum.electrum
+  - org.inkscape.Inkscape
+  - org.kde.kdenlive
+  - org.kde.kmymoney
+  - org.kde.krita
+  - org.keepassxc.KeePassXC
+  - org.libreoffice.LibreOffice
+  - org.luanti.luanti
+  - org.nickvision.tagger
+  - org.nickvision.tubeconverter
+  - org.openttd.OpenTTD
+  - org.polymc.PolyMC
+  - org.ppsspp.PPSSPP
+  - org.stellarium.Stellarium
+  - org.telegram.desktop
+  - space.gaiasky.GaiaSky

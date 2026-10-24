@@ -3,6 +3,13 @@
   hosts: local
   become: true
 
+  vars:
+    # Change this to your actual system username
+    target_user: "haji_amzar"
+
+  vars_files:
+    - flatpak_vars.yml
+
   tasks:
     - name: Load OS-specific variables
       include_vars: "{{ item }}"
@@ -59,17 +66,39 @@
         name: stow
         state: present
 
-    - name: Clone or update dotfiles repository
+    - name: Clone or update dotfiles repository (as target user)
       git:
-        repo: 'https://github.com/YOUR_USERNAME/dotfiles.git' # Replace with your actual repo URL
-        dest: "{{ lookup('env', 'HOME') }}/.dotfiles"
-        accept_hostkey: yes
-        update: yes
+        repo: 'https://github.com/hajiamzar/dotfiles.git' # Replace with your actual repo URL
+        dest: "~/.dotfiles"
+        accept_hostkey: true
+        update: true
+      become: true
+      become_user: "{{ target_user }}"
 
-    - name: Stow dotfiles configurations into ~/.config
+    - name: Stow dotfiles configurations into ~/.config (as target user)
       command: >
-        stow -d "{{ lookup('env', 'HOME') }}/.dotfiles"
-             -t "{{ lookup('env', 'HOME') }}/.config"
+        stow -d "~/.dotfiles"
+             -t "~/.config"
              labwc noctalia alacritty nvim
       args:
-        creates: "{{ lookup('env', 'HOME') }}/.config/labwc"
+        creates: "~/.config/labwc"
+      become: true
+      become_user: "{{ target_user }}"
+
+    - name: Add Flathub repository
+      community.general.flatpak_remote:
+        name: flathub
+        state: present
+        method: user
+        url: https://dl.flathub.org/repo/flathub.flatpakrepo
+      become: true
+      become_user: "{{ target_user }}"
+
+    - name: Install specified Flatpak packages for the user
+      community.general.flatpak:
+        name: "{{ item }}"
+        state: present
+        method: user
+      loop: "{{ flatpak_packages }}"
+      become: true
+      become_user: "{{ target_user }}"
